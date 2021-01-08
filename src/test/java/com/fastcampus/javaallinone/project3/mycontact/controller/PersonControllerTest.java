@@ -165,7 +165,7 @@ class PersonControllerTest {
                 () -> assertThat(result.getAddress()).isEqualTo("판교"),
                 () -> assertThat(result.getBirthday()).isEqualTo(Birthday.of(LocalDate.now())),
                 () -> assertThat(result.getJob()).isEqualTo("programmer"),
-                () ->assertThat(result.getPhoneNumber()).isEqualTo("010-1111-2222")
+                () -> assertThat(result.getPhoneNumber()).isEqualTo("010-1111-2222")
         );
     }
 

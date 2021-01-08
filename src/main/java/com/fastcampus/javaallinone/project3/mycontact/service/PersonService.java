@@ -36,9 +36,10 @@ public class PersonService {
 
         return person;
     }
+
     @Transactional
     public void put(PersonDto personDto) {
-        Person person=new Person();
+        Person person = new Person();
         person.set(personDto);
         person.setName(personDto.getName());
 

@@ -49,6 +49,10 @@ class PersonServiceTest {
     @Mock
     private PersonRepository personRepository;
 
+    private PersonDto mockPersonDto() {
+        return PersonDto.of("martin", "programming", "판교", LocalDate.now(), "programmer", "010-1111-2222");
+    }
+
     @Test
     void getAll() {
         when(personRepository.findAll(any(Pageable.class)))
@@ -100,6 +104,18 @@ class PersonServiceTest {
         verify(personRepository, times(1)).save(argThat(new IsPersonWillBeInserted()));
     }
 
+
+
+    @Test
+    void modify() {
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.of(new Person("martin")));
+
+        personService.modify(1L, mockPersonDto());
+
+        verify(personRepository, times(1)).save(argThat(new IsPersonWillBeUpdated()));
+    }
+
     @Test
     void modifyIfPersonNotFound() {
         when(personRepository.findById(1L))
@@ -114,16 +130,6 @@ class PersonServiceTest {
                 .thenReturn(Optional.of(new Person("tony")));
 
         assertThrows(RenameIsNotPermittedException.class, () -> personService.modify(1L, mockPersonDto()));
-    }
-
-    @Test
-    void modify() {
-        when(personRepository.findById(1L))
-                .thenReturn(Optional.of(new Person("martin")));
-
-        personService.modify(1L, mockPersonDto());
-
-        verify(personRepository, times(1)).save(argThat(new IsPersonWillBeUpdated()));
     }
 
     @Test
@@ -162,9 +168,6 @@ class PersonServiceTest {
         verify(personRepository, times(1)).save(argThat(new IsPersonWillBeDeleted()));
     }
 
-    private PersonDto mockPersonDto() {
-        return PersonDto.of("martin", "programming", "판교", LocalDate.now(), "programmer", "010-1111-2222");
-    }
 
     private static class IsPersonWillBeInserted implements ArgumentMatcher<Person> {
         @Override
