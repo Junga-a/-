@@ -2,10 +2,12 @@ package com.fastcampus.javaallinone.project3.mycontact.service;
 
 import com.fastcampus.javaallinone.project3.mycontact.controller.PersonController;
 import com.fastcampus.javaallinone.project3.mycontact.controller.dto.PersonDto;
+import com.fastcampus.javaallinone.project3.mycontact.domain.Block;
 import com.fastcampus.javaallinone.project3.mycontact.domain.Person;
 import com.fastcampus.javaallinone.project3.mycontact.domain.dta.Birthday;
 import com.fastcampus.javaallinone.project3.mycontact.exception.PersonNotFoundException;
 import com.fastcampus.javaallinone.project3.mycontact.exception.RenameIsNotPermittedException;
+import com.fastcampus.javaallinone.project3.mycontact.repository.BlockRepository;
 import com.fastcampus.javaallinone.project3.mycontact.repository.PersonRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,6 +50,9 @@ class PersonServiceTest {
     private PersonService personService;
     @Mock
     private PersonRepository personRepository;
+    @Autowired
+    private BlockRepository blockRepository;
+
 
     private PersonDto mockPersonDto() {
         return PersonDto.of("martin", "programming", "판교", LocalDate.now(), "programmer", "010-1111-2222");
@@ -214,4 +219,19 @@ class PersonServiceTest {
             return person.isDeleted();
         }
     }
+
+
+    @Test
+    void getPeopleExcludeBlocks() {
+        givenPeople();
+        givenBlocks();
+
+        List<Person> result = personService.getPeopleExcludeBlocks();
+
+//        System.out.println(result);
+        result.forEach(System.out::println);
+    }
+
+
+
 }
