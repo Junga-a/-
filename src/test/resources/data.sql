@@ -13,3 +13,10 @@ insert into person(`id`, `name`, `year_of_birthday`, `month_of_birthday`, `day_o
 values (6, 'tony', 1991, 7, 10, 'officer', 'reading', '010-2222-5555', '서울');
 insert into person(`id`, `name`, `deleted`)
 values (7, 'andrew', true);
+
+
+insert into block(`id`, `name`) values (1, 'dennis');
+insert into block(`id`, `name`) values (2, 'sophia');
+
+update person set block_id = 1 where id = 3;
+update person set block_id = 2 where id = 4;

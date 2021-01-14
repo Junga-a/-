@@ -41,6 +41,10 @@ public class Person {
 
     private String phoneNumber;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Block block;
+
     @ColumnDefault("0")
     private boolean deleted;
 
