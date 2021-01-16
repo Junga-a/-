@@ -1,5 +1,6 @@
 package com.fastcampus.javaallinone.project3.mycontact.service;
 
+import com.fastcampus.javaallinone.project3.mycontact.controller.dto.GroupDto;
 import com.fastcampus.javaallinone.project3.mycontact.controller.dto.PersonDto;
 import com.fastcampus.javaallinone.project3.mycontact.domain.Group;
 import com.fastcampus.javaallinone.project3.mycontact.domain.Person;
@@ -15,13 +16,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static java.awt.Container.log;
-
 public class GroupService {
     @Autowired
     private GroupRepository groupRepository;
 
-    public Optional<Group> getPeopleById(Long id) {
+    public Optional<Group> getGroupById(Long id) {
         return groupRepository.findById(id);
     }
 
@@ -37,48 +36,34 @@ public class GroupService {
     }
 
     @Transactional
-    public void put(Group group) {
+    public void put(GroupDto groupDto) {
         Group group = new Group();
-        group.s1et(group);
-        group.setName(group.getName());
+        group.set(groupDto);
+        group.setDescription(groupDto.getDescription());
 
-        personRepository.save(person);
+        groupRepository.save(group);
     }
 
     @Transactional
-    public void modify(Long id, PersonDto personDto) {
-        Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
+    public void modify(Long id, GroupDto groupDto) {
+        Group group = groupRepository.findById(id).orElseThrow(PersonNotFoundException::new);
 
-        if (!person.getName().equals(personDto.getName())) {
+        if (!group.getDescription().equals(groupDto.getDescription())) {
             throw new RenameIsNotPermittedException();
         }
 
-        person.set(personDto);
+        group.set(groupDto);
 
-        personRepository.save(person);
-    }
-
-    @Transactional
-    public void modify(Long id, String name) {
-        Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
-
-        person.setName(name);
-
-        personRepository.save(person);
+        groupRepository.save(group);
     }
 
     @Transactional
     public void delete(Long id) {
-        Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
+        Group group = groupRepository.findById(id).orElseThrow(() -> new RuntimeException("그룹이 존재하지 않습니다."));
 
-        person.setDeleted(true);
+        group.setDeleted(true);
 
-        personRepository.save(person);
+        groupRepository.save(group);
     }
 
-    public List<Person> getPeopleExcludeBlocks() {
-        List<Person> people = personRepository.findAll();
-
-        return people.stream().filter(person -> person.getBlock() == null).collect(Collectors.toList());
-    }
 }
