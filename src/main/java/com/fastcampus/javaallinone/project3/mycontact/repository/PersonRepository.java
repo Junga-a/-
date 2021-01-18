@@ -1,6 +1,8 @@
 package com.fastcampus.javaallinone.project3.mycontact.repository;
 
 import com.fastcampus.javaallinone.project3.mycontact.domain.Person;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +17,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query(value = "select * from Person person where person.deleted = true", nativeQuery = true)
     List<Person> findPeopleDeleted();
+
+    public List<Person> findByGroupId(Long groupId);
 }

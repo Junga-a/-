@@ -27,7 +27,7 @@ public class Group {
     @ColumnDefault("0")
     private boolean deleted;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Person> personList;
 
     public void set(GroupDto groupDto) {
@@ -36,5 +36,11 @@ public class Group {
         }
     }
 
+    public void addPerson(Person person)
+    {
+        person.setGroupId(id);
+        personList.add(person);
+        person.setGroup(this);
+    }
 
 }

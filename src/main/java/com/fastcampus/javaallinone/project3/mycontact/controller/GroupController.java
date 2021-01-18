@@ -2,6 +2,7 @@ package com.fastcampus.javaallinone.project3.mycontact.controller;
 
 import com.fastcampus.javaallinone.project3.mycontact.controller.dto.GroupDto;
 import com.fastcampus.javaallinone.project3.mycontact.domain.Group;
+import com.fastcampus.javaallinone.project3.mycontact.domain.Person;
 import com.fastcampus.javaallinone.project3.mycontact.repository.GroupRepository;
 import com.fastcampus.javaallinone.project3.mycontact.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,17 +43,18 @@ public class GroupController {
     }
 
     @PatchMapping("/{id}")
-    public void modifyGroup(@PathVariable Long id, @RequestBody PersonDto personDto) {
-        personService.modify(id, personDto);
+    public void modifyGroup(@PathVariable Long id, @RequestBody GroupDto groupDto) {
+        groupService.modify(id, groupDto);
     }
 
     @GetMapping("/{id}/people")
     public List<Person> getPeopleInGroup(@PathVariable Long id) {
-        return null;    // 특정 그룹의 Person 리스트 가져오기
+        return groupService.getPeopleInGroup(id);
     }
 
     @PutMapping("/{id}/person/{personId}")
     public void putPersonInGroup(@PathVariable Long id, @PathVariable Long personId) {
-        // Person 정보를 Group 정보에 매핑하기
+        groupService.putPersonInGroup(id, personId);
     }
+
 }

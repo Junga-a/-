@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -81,4 +82,11 @@ public class Person {
     public boolean isBirthdayToday() {
         return LocalDate.now().equals(LocalDate.of(this.birthday.getYearOfBirthday(), this.birthday.getMonthOfBirthday(), this.birthday.getDayOfBirthday()));
     }
+
+    @Min(value = 1)
+    private Long groupId;
+
+    @ManyToOne
+    @JoinColumn(name = "groupId", nullable = false)
+    private Group group;
 }
